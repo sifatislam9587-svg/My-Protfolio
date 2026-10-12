@@ -1,0 +1,520 @@
+// All project content lives here. Edit this file to change the list page and every detail page.
+// NOTE: names, numbers and descriptions are placeholders: replace them with your real work.
+
+export type Project = {
+  slug: string
+  /** Short name shown on the banner */
+  name: string
+  /** Long title shown on cards and the detail page */
+  title: string
+  label: 'Product' | 'Client' | 'Open source' | 'Internal'
+  year: string
+  role: string
+  duration: string
+  /** Big two-word text on the card banner */
+  big: string
+  /** Text on the mock screen in the banner */
+  screen: string
+  /** Index into the banner colour palette (0-5) */
+  tone: number
+  summary: string
+  challenge: string
+  solution: string
+  features: string[]
+  results: { value: string; label: string }[]
+  stack: string[]
+  link?: { label: string; href: string }
+}
+
+export const PROJECTS: Project[] = [
+  {
+    slug: 'postbridge',
+    name: 'Postbridge',
+    title: 'Postbridge, one API for scheduling social content',
+    label: 'Product',
+    year: '2026',
+    role: 'Founder & Lead Engineer',
+    duration: '6 months',
+    big: 'One API',
+    screen: 'Publish everywhere at once',
+    tone: 0,
+    summary:
+      'A single API to post, schedule, and measure content across a dozen social networks, built for apps and AI agents.',
+    challenge:
+      'Every social network has its own auth flow, media rules, rate limits and error format. Teams were maintaining a dozen fragile integrations just to publish one post.',
+    solution:
+      'A unified publishing API with one request shape, a durable scheduling queue, per-network adapters and automatic retries. Webhooks report the final status of every post.',
+    features: [
+      'One request format for 12+ networks',
+      'Scheduling with timezone-aware queues',
+      'Media validation and automatic resizing',
+      'Webhooks and analytics per post',
+    ],
+    results: [
+      { value: '12+', label: 'networks supported' },
+      { value: '99.9%', label: 'successful deliveries' },
+      { value: '<200 ms', label: 'API response, p95' },
+    ],
+    stack: ['Node.js', 'NestJS', 'PostgreSQL', 'Redis', 'BullMQ', 'Docker'],
+  },
+  {
+    slug: 'relay',
+    name: 'Relay',
+    title: 'Relay, a unified inbox for sales teams',
+    label: 'Product',
+    year: '2026',
+    role: 'Lead Engineer',
+    duration: '5 months',
+    big: 'One Inbox',
+    screen: 'Every channel, one queue',
+    tone: 1,
+    summary:
+      'A keyboard-first inbox bringing email, chat, and social DMs into one queue so reps never miss a reply.',
+    challenge:
+      'Sales reps were switching between five tabs to answer prospects, and warm replies were getting buried.',
+    solution:
+      'A real-time inbox that normalises every channel into one conversation model, with assignment rules, snippets and keyboard shortcuts for everything.',
+    features: [
+      'Email, chat and DMs in one queue',
+      'Assignment and routing rules',
+      'Snippets and shared templates',
+      'Full keyboard navigation',
+    ],
+    results: [
+      { value: '-40%', label: 'average first-reply time' },
+      { value: '5 → 1', label: 'tools per rep' },
+      { value: '0', label: 'missed replies in pilot' },
+    ],
+    stack: ['TypeScript', 'NestJS', 'PostgreSQL', 'WebSockets', 'Next.js'],
+  },
+  {
+    slug: 'frontline',
+    name: 'Frontline',
+    title: 'Frontline, an AI assistant for reception teams',
+    label: 'Client',
+    year: '2025',
+    role: 'Full-Stack Engineer',
+    duration: '4 months',
+    big: 'AI Desk',
+    screen: 'An assistant for your front desk',
+    tone: 2,
+    summary:
+      'Full-stack build of a CRM plus an AI agent that answers, books, and follows up across messaging channels.',
+    challenge:
+      'A busy clinic network was losing bookings because calls and messages went unanswered outside opening hours.',
+    solution:
+      'An AI agent connected to the calendar and CRM that answers questions, books appointments and sends reminders, with a clean hand-off to a human when needed.',
+    features: [
+      'Answers FAQs on WhatsApp and web chat',
+      'Books and reschedules appointments',
+      'Automatic follow-ups and reminders',
+      'Human hand-off with full context',
+    ],
+    results: [
+      { value: '+28%', label: 'booked appointments' },
+      { value: '24/7', label: 'coverage' },
+      { value: '-60%', label: 'no-shows' },
+    ],
+    stack: ['Next.js', 'Node.js', 'PostgreSQL', 'OpenAI API', 'Redis'],
+  },
+  {
+    slug: 'leadloop-extension',
+    name: 'Leadloop',
+    title: 'Leadloop Extension, capture and follow up on leads from your browser',
+    label: 'Product',
+    year: '2026',
+    role: 'Creator',
+    duration: 'Ongoing',
+    big: 'Lead Capture',
+    screen: 'Save a lead in one click',
+    tone: 0,
+    summary: 'A browser extension that turns any page into a source of qualified leads, with enrichment and CRM sync.',
+    challenge:
+      'Prospecting meant copying details from tabs into spreadsheets, then forgetting to follow up.',
+    solution:
+      'A toolbar extension with one-click capture, automatic enrichment, lead scoring and follow-up loops that sync to your CRM in real time.',
+    features: ['One-click capture', 'Automatic enrichment', 'CRM sync', 'Follow-up reminders and scoring'],
+    results: [
+      { value: '1 click', label: 'to save a lead' },
+      { value: 'Hours', label: 'saved every week' },
+      { value: 'Minimal', label: 'permissions requested' },
+    ],
+    stack: ['Chrome Extensions', 'TypeScript', 'Node.js', 'PostgreSQL'],
+    link: { label: 'See the Leadloop section', href: '/#leadloop' },
+  },
+  {
+    slug: 'search-endpoint-refactor',
+    name: 'Search',
+    title: 'Search endpoint refactor: 350 ms down to 35 ms',
+    label: 'Internal',
+    year: '2026',
+    role: 'Backend Lead',
+    duration: '3 weeks',
+    big: '10x Faster',
+    screen: 'p95: 350 ms → 35 ms',
+    tone: 3,
+    summary:
+      'Composite indexes, a rewritten query plan with a single join, read-through caching and lean response shapes.',
+    challenge: 'The main search endpoint was the slowest part of the product and degraded under load.',
+    solution:
+      'Profiled with EXPLAIN ANALYZE, added composite indexes for the hottest filters, collapsed the query into one join, cached reads and trimmed the payload.',
+    features: ['Composite indexes', 'One-join query plan', 'Read-through cache', 'Public load-test and CI checks'],
+    results: [
+      { value: '10x', label: 'faster at p95' },
+      { value: '35 ms', label: 'p95 in production' },
+      { value: '-70%', label: 'database CPU' },
+    ],
+    stack: ['PostgreSQL', 'Redis', 'NestJS', 'k6'],
+  },
+  {
+    slug: 'carrier-messaging-automation',
+    name: 'Carrier',
+    title: 'Messaging automation for a regional carrier',
+    label: 'Client',
+    year: '2025',
+    role: 'Backend Owner',
+    duration: '7 months',
+    big: 'Messaging',
+    screen: 'Routing, retries, delivery status',
+    tone: 4,
+    summary:
+      'Backend for a business messaging rollout: routing, template approvals, delivery reconciliation and webhooks into the CRM.',
+    challenge: 'High-volume sends had to stay inside provider rate limits while every message status stayed accurate.',
+    solution:
+      'Queue-based sending with per-provider throttles, a reconciliation job for delivery statuses, retry queues and signed webhooks into the CRM.',
+    features: ['Smart routing', 'Template approval flow', 'Delivery reconciliation', 'Retry queues and webhooks'],
+    results: [
+      { value: '2M+', label: 'messages per month' },
+      { value: '99.5%', label: 'status accuracy' },
+      { value: '0', label: 'rate-limit bans' },
+    ],
+    stack: ['Node.js', 'NestJS', 'RabbitMQ', 'PostgreSQL', 'Docker'],
+  },
+  {
+    slug: 'rls-starter-kit',
+    name: 'RLS Kit',
+    title: 'Row-level security starter kit for multi-tenant apps',
+    label: 'Open source',
+    year: '2025',
+    role: 'Author',
+    duration: '2 months',
+    big: 'Zero Leaks',
+    screen: 'Tenant isolation in the database',
+    tone: 5,
+    summary:
+      'Postgres row-level security with integration tests that deliberately try to read across tenants.',
+    challenge: 'Tenant isolation lived in application code, where one forgotten WHERE clause meant a data leak.',
+    solution:
+      'Policies enforced by PostgreSQL itself, a typed helper for setting the tenant context, and tests that attempt cross-tenant reads on every table.',
+    features: ['RLS policies per table', 'Tenant-context helper', 'Cross-tenant attack tests', 'Migration templates'],
+    results: [
+      { value: '0', label: 'tenant leaks' },
+      { value: '100%', label: 'tables covered by tests' },
+      { value: 'MIT', label: 'open source licence' },
+    ],
+    stack: ['PostgreSQL', 'Prisma', 'TypeScript', 'Jest'],
+    link: { label: 'View on GitHub', href: '#' },
+  },
+  {
+    slug: 'property-marketplace',
+    name: 'Estate',
+    title: 'Property marketplace with payments and CRM',
+    label: 'Client',
+    year: '2024',
+    role: 'Full-Stack Delivery Lead',
+    duration: '8 months',
+    big: 'Marketplace',
+    screen: 'Find, book and pay',
+    tone: 2,
+    summary: 'End-to-end property marketplace with GraphQL APIs, payments, CRM and multi-channel notifications.',
+    challenge: 'Listings, enquiries and payments lived in separate tools, so agents lost track of leads.',
+    solution:
+      'One platform with a GraphQL API, online payments, a built-in CRM and email, SMS and push notifications.',
+    features: ['Search with map filters', 'Online payments', 'Agent CRM', 'Email, SMS and push notifications'],
+    results: [
+      { value: '10k+', label: 'listings at launch' },
+      { value: '3', label: 'notification channels' },
+      { value: '8 mo', label: 'idea to launch' },
+    ],
+    stack: ['GraphQL', 'Node.js', 'PostgreSQL', 'Next.js', 'AWS'],
+  },
+  {
+    slug: 'billing-engine',
+    name: 'Billing',
+    title: 'Billing engine for a multi-product SaaS suite',
+    label: 'Internal',
+    year: '2026',
+    role: 'Lead Backend Engineer',
+    duration: '4 months',
+    big: 'Billing',
+    screen: 'Plans, usage and invoices',
+    tone: 1,
+    summary: 'Subscription and usage-based billing shared by three products, with invoices, proration and dunning.',
+    challenge: 'Each product had its own half-built billing code, and finance reconciled everything by hand.',
+    solution:
+      'A single billing service with plans, metered usage, proration, invoicing and automatic retries for failed payments.',
+    features: ['Subscriptions and metered usage', 'Proration and credits', 'PDF invoices', 'Failed-payment retries'],
+    results: [
+      { value: '3', label: 'products on one engine' },
+      { value: '-90%', label: 'manual reconciliation' },
+      { value: '99.99%', label: 'invoice accuracy' },
+    ],
+    stack: ['NestJS', 'PostgreSQL', 'Stripe', 'BullMQ'],
+  },
+  {
+    slug: 'analytics-pipeline',
+    name: 'Pulse',
+    title: 'Pulse, a product analytics pipeline',
+    label: 'Internal',
+    year: '2026',
+    role: 'Lead Backend Engineer',
+    duration: '3 months',
+    big: 'Analytics',
+    screen: 'Events to insights',
+    tone: 3,
+    summary: 'Event ingestion and aggregation pipeline powering dashboards for several products.',
+    challenge: 'Dashboards queried the production database directly and slowed the apps down.',
+    solution: 'A Kafka-based pipeline that ingests events, aggregates them and serves ready-made metrics through a read API.',
+    features: ['Event ingestion API', 'Streaming aggregation', 'Cached metrics API', 'Backfill tooling'],
+    results: [
+      { value: '50M', label: 'events per day' },
+      { value: '<1 s', label: 'dashboard load' },
+      { value: '0', label: 'impact on production DB' },
+    ],
+    stack: ['Kafka', 'Node.js', 'PostgreSQL', 'Redis', 'Docker'],
+  },
+  {
+    slug: 'ai-search',
+    name: 'Ask',
+    title: 'AI-assisted search across documents',
+    label: 'Product',
+    year: '2025',
+    role: 'Backend Engineer',
+    duration: '3 months',
+    big: 'AI Search',
+    screen: 'Ask your own documents',
+    tone: 4,
+    summary: 'Semantic search and question answering over a customer’s own documents.',
+    challenge: 'Keyword search failed when people described what they needed in their own words.',
+    solution:
+      'Embeddings stored in PostgreSQL, hybrid keyword and vector ranking, and answers that cite the source passages.',
+    features: ['Hybrid keyword and vector search', 'Cited answers', 'Per-tenant indexes', 'Incremental re-indexing'],
+    results: [
+      { value: '+35%', label: 'search success rate' },
+      { value: '<400 ms', label: 'answer latency' },
+      { value: '100%', label: 'answers with sources' },
+    ],
+    stack: ['PostgreSQL', 'pgvector', 'NestJS', 'OpenAI API'],
+  },
+  {
+    slug: 'crm-sync-service',
+    name: 'Sync',
+    title: 'Two-way CRM sync service',
+    label: 'Client',
+    year: '2025',
+    role: 'Backend Lead',
+    duration: '2 months',
+    big: 'CRM Sync',
+    screen: 'Always up to date',
+    tone: 5,
+    summary: 'Reliable two-way synchronisation between an app and three popular CRMs.',
+    challenge: 'Conflicting edits and API limits made CRM data drift out of date within days.',
+    solution: 'Change-data capture, idempotent writes, conflict rules and back-pressure that respects each CRM’s limits.',
+    features: ['Two-way sync', 'Conflict resolution rules', 'Idempotent webhooks', 'Sync health dashboard'],
+    results: [
+      { value: '3', label: 'CRMs supported' },
+      { value: '<5 s', label: 'typical sync delay' },
+      { value: '0', label: 'duplicate records' },
+    ],
+    stack: ['Node.js', 'PostgreSQL', 'RabbitMQ', 'TypeScript'],
+  },
+  {
+    slug: 'media-vault',
+    name: 'Vault',
+    title: 'Secure media storage and delivery',
+    label: 'Client',
+    year: '2024',
+    role: 'Backend Lead',
+    duration: '2 months',
+    big: 'Media Vault',
+    screen: 'Private files, fast delivery',
+    tone: 0,
+    summary: 'Private media storage with signed URLs, virus scanning and on-the-fly image variants.',
+    challenge: 'Users uploaded large files that had to stay private yet load instantly on any device.',
+    solution: 'Direct-to-S3 uploads, scanning in a worker, signed expiring URLs and cached image variants behind a CDN.',
+    features: ['Direct uploads', 'Virus scanning', 'Signed expiring URLs', 'Responsive image variants'],
+    results: [
+      { value: '5 TB', label: 'stored securely' },
+      { value: '-65%', label: 'page weight' },
+      { value: '0', label: 'public bucket leaks' },
+    ],
+    stack: ['AWS S3', 'CloudFront', 'Node.js', 'Docker'],
+  },
+  {
+    slug: 'notification-hub',
+    name: 'Notify',
+    title: 'Notification hub for email, SMS and push',
+    label: 'Internal',
+    year: '2024',
+    role: 'Full-Stack Delivery Lead',
+    duration: '6 weeks',
+    big: 'Notify',
+    screen: 'Right message, right channel',
+    tone: 1,
+    summary: 'One service that sends email, SMS and push with templates, preferences and delivery tracking.',
+    challenge: 'Each feature sent its own notifications, with no preferences and no way to see what was delivered.',
+    solution: 'A central hub with templates, user preferences, channel fallback and delivery logs.',
+    features: ['Templates with variables', 'User preferences', 'Channel fallback', 'Delivery logs'],
+    results: [
+      { value: '3', label: 'channels in one API' },
+      { value: '99%', label: 'delivery rate' },
+      { value: '-50%', label: 'support tickets' },
+    ],
+    stack: ['Node.js', 'BullMQ', 'Redis', 'PostgreSQL'],
+  },
+  {
+    slug: 'ci-cd-pipeline',
+    name: 'Ship',
+    title: 'Zero-downtime CI/CD pipeline',
+    label: 'Internal',
+    year: '2025',
+    role: 'Senior Backend Engineer',
+    duration: '1 month',
+    big: 'CI / CD',
+    screen: 'Merge, test, deploy',
+    tone: 3,
+    summary: 'Automated test, build and deploy pipeline with preview environments and one-click rollback.',
+    challenge: 'Deploys were manual, slow and happened only on Fridays, which no one enjoyed.',
+    solution: 'Containerised builds, automated tests, blue-green deploys and a preview environment for every pull request.',
+    features: ['Preview environments', 'Blue-green deploys', 'Automated database migrations', 'One-click rollback'],
+    results: [
+      { value: '10x', label: 'more deploys per week' },
+      { value: '<8 min', label: 'merge to production' },
+      { value: '0', label: 'downtime deploys' },
+    ],
+    stack: ['Docker', 'GitHub Actions', 'AWS', 'Terraform'],
+  },
+  {
+    slug: 'job-queue-toolkit',
+    name: 'Queues',
+    title: 'Distributed job queue toolkit',
+    label: 'Open source',
+    year: '2025',
+    role: 'Author',
+    duration: '6 weeks',
+    big: 'Job Queues',
+    screen: 'Retries, backoff, visibility',
+    tone: 5,
+    summary: 'A small library of battle-tested patterns for retries, back-off, idempotency and dead-letter queues.',
+    challenge: 'Every project re-implemented background jobs slightly differently, and slightly wrong.',
+    solution: 'Reusable NestJS module wrapping BullMQ with sane defaults, idempotency keys and an admin dashboard.',
+    features: ['Retries with back-off', 'Idempotency keys', 'Dead-letter queues', 'Admin dashboard'],
+    results: [
+      { value: '200+', label: 'GitHub stars (placeholder)' },
+      { value: '4', label: 'projects use it' },
+      { value: 'MIT', label: 'open source licence' },
+    ],
+    stack: ['NestJS', 'BullMQ', 'Redis', 'TypeScript'],
+    link: { label: 'View on GitHub', href: '#' },
+  },
+  {
+    slug: 'api-gateway',
+    name: 'Gateway',
+    title: 'API gateway with rate limiting and keys',
+    label: 'Internal',
+    year: '2025',
+    role: 'Senior Backend Engineer',
+    duration: '2 months',
+    big: 'Gateway',
+    screen: 'Keys, quotas, rate limits',
+    tone: 2,
+    summary: 'A gateway that adds API keys, quotas, usage metering and rate limiting in front of public APIs.',
+    challenge: 'Public endpoints had no protection against abuse and no way to bill by usage.',
+    solution: 'Edge service with sliding-window rate limits in Redis, hashed API keys and usage events for billing.',
+    features: ['Hashed API keys', 'Sliding-window rate limits', 'Per-plan quotas', 'Usage metering'],
+    results: [
+      { value: '<3 ms', label: 'added latency' },
+      { value: '100%', label: 'traffic metered' },
+      { value: '-99%', label: 'abusive requests' },
+    ],
+    stack: ['Node.js', 'Redis', 'NestJS', 'AWS'],
+  },
+  {
+    slug: 'chat-widget',
+    name: 'Chat',
+    title: 'Embeddable live chat widget',
+    label: 'Product',
+    year: '2024',
+    role: 'Full-Stack Engineer',
+    duration: '2 months',
+    big: 'Live Chat',
+    screen: 'Talk to visitors instantly',
+    tone: 4,
+    summary: 'A lightweight chat widget that any website can add with one script tag.',
+    challenge: 'Existing widgets were heavy and slowed down the sites that embedded them.',
+    solution: 'A tiny script that lazy-loads the app, with WebSocket messaging and offline email capture.',
+    features: ['One-line install', 'Real-time messaging', 'Offline email capture', 'Custom colours'],
+    results: [
+      { value: '<15 KB', label: 'initial script' },
+      { value: '99.9%', label: 'message delivery' },
+      { value: '1 line', label: 'to install' },
+    ],
+    stack: ['TypeScript', 'WebSockets', 'Node.js', 'Redis'],
+  },
+  {
+    slug: 'invoice-automation',
+    name: 'Invoices',
+    title: 'Invoice automation for a logistics company',
+    label: 'Client',
+    year: '2023',
+    role: 'Backend Developer',
+    duration: '3 months',
+    big: 'Invoices',
+    screen: 'From delivery to payment',
+    tone: 1,
+    summary: 'Generates, sends and reconciles invoices automatically from delivery data.',
+    challenge: 'Finance spent days every month building invoices from spreadsheets.',
+    solution: 'A scheduled service that turns delivery records into invoices, emails them and matches incoming payments.',
+    features: ['Automatic invoice generation', 'Email delivery', 'Payment matching', 'Audit trail'],
+    results: [
+      { value: '-95%', label: 'time spent on invoicing' },
+      { value: '0', label: 'manual spreadsheets' },
+      { value: '3 days', label: 'faster payments' },
+    ],
+    stack: ['Node.js', 'Express', 'MongoDB', 'AWS'],
+  },
+  {
+    slug: 'observability-stack',
+    name: 'Watch',
+    title: 'Observability stack: logs, metrics and alerts',
+    label: 'Internal',
+    year: '2025',
+    role: 'Senior Backend Engineer',
+    duration: '1 month',
+    big: 'Observability',
+    screen: 'See problems before users do',
+    tone: 3,
+    summary: 'Structured logging, dashboards and alerting that catch regressions before customers notice.',
+    challenge: 'Incidents were discovered from customer messages, and debugging meant guessing.',
+    solution: 'Request-ID tracing across services, structured JSON logs, golden-signal dashboards and actionable alerts.',
+    features: ['Distributed request tracing', 'Structured logs', 'Golden-signal dashboards', 'Actionable alerts'],
+    results: [
+      { value: '-70%', label: 'time to detect incidents' },
+      { value: '-50%', label: 'time to resolve' },
+      { value: '24/7', label: 'automated monitoring' },
+    ],
+    stack: ['Node.js', 'Docker', 'AWS', 'Grafana'],
+  },
+]
+
+export function getProject(slug: string) {
+  return PROJECTS.find((p) => p.slug === slug)
+}
+
+export function getAdjacentProjects(slug: string) {
+  const i = PROJECTS.findIndex((p) => p.slug === slug)
+  return {
+    prev: i > 0 ? PROJECTS[i - 1] : PROJECTS[PROJECTS.length - 1],
+    next: i < PROJECTS.length - 1 ? PROJECTS[i + 1] : PROJECTS[0],
+  }
+}
